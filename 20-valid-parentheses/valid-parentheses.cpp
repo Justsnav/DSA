@@ -1,38 +1,25 @@
 class Solution {
 public:
-    int match(char a, char b) {
-        if (a == '(' && b == ')')
-            return 1;
-        if (a == '{' && b == '}')
-            return 1;
-        if (a == '[' && b == ']')
-            return 1;
-        return 0;
-    }
-
     bool isValid(string s) {
         stack<char> st;
-
-        if (s.size() % 2 != 0) {
-            return false;
-        }
-
-        for (char ch : s) {
-            if (ch == '(' || ch == '{' || ch == '[') {
-                st.push(ch);
+        for (int i = 0; i < s.size(); i++) {
+            if (s[i] == '(' || s[i] == '{' || s[i] == '[') {
+                st.push(s[i]);
             } else {
                 if (st.empty()) {
                     return false;
                 }
-
-                char first = st.top();
+            
+            if ((st.top() == '(' && s[i] == ')') ||
+                (st.top() == '{' && s[i] == '}') ||
+                (st.top() == '[' && s[i] == ']')) {
                 st.pop();
-
-                if (!match(first, ch)) {
-                    return false;
-                }
+            } else {
+                return false;
             }
         }
-        return st.empty();
     }
-};
+    return st.empty();
+}
+}
+;
